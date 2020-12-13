@@ -6,11 +6,7 @@
 
 1. [Create a Giphy Key](https://developers.giphy.com/dashboard/?create=true)
 
-2. Navigate to the hosted version the application
-
-```
-https://alexjpaz-twitch.github.io/giphy
-```
+2. Navigate to https://alexjpaz-twitch.github.io/giphy
 
 4. Enter your `giphyKey` from step 1 and `twitchChannel` (e.g. `alexjpaz`)
 
@@ -23,6 +19,10 @@ TBD
 ## Limits
 
 Limits are based on the Giphy key you are using
+
+## Known Issues
+
+See [Issues](https://github.com/alexjpaz-twitch/giphy/issues)
 
 ## Contributing
 
