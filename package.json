@@ -2,6 +2,7 @@
   "name": "giphy",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://alexjpaz-twitch.github.io/giphy",
   "dependencies": {
     "@giphy/js-fetch-api": "^2.0.1",
     "@testing-library/jest-dom": "^5.11.4",
