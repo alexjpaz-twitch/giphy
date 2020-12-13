@@ -41,7 +41,9 @@ function App() {
 
       return;
     }
+  });
 
+  useEffect(() => {
     // TODO maybe extra a bit so we can test :)
     ComfyJS.onCommand = async (user, command, message, flags, extra) => {
       console.log(command, message);
@@ -62,7 +64,7 @@ function App() {
     };
 
     ComfyJS.Init(twitchChannel);
-  }, [ hasInteracted ]);
+  });
 
   if(!hasInteracted) {
     return <button onClick={e => setHasInteracted(true)}>CLICK ME</button>;
