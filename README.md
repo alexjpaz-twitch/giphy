@@ -6,9 +6,15 @@
 
 1. [Create a Giphy Key](https://developers.giphy.com/dashboard/?create=true)
 
-2. Navigate to the hosted versio
+2. Navigate to the hosted version the application
 
-3. Have fun!
+```
+https://alexjpaz-twitch.github.io/giphy
+```
+
+4. Enter your `giphyKey` from step 1 and `twitchChannel` (e.g. `alexjpaz`)
+
+3. Copy the URL into your browser source in your streaming software of choice!
 
 ## Hosting your own 
 

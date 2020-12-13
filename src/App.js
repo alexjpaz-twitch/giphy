@@ -40,6 +40,11 @@ function App() {
     }
   });
 
+  if(!twitchChannel || !giphyKey) {
+    return (
+      <ConfigForm />
+    )
+  }
 
   if(!hasInteracted) {
     return <button onClick={e => setHasInteracted(true)}>CLICK ME</button>;
@@ -49,6 +54,27 @@ function App() {
     <div className="App">
       <TwitchContainer giphyKey={giphyKey} twitchChannel={twitchChannel} />
     </div>
+  );
+}
+
+function ConfigForm() {
+  return (
+    <form class='form'>
+      <div>
+        <label for='giphyKey'>
+          Giphy Key
+          (<a href='https://developers.giphy.com/dashboard/?create=true'>Create one</a>)
+        </label>
+        <input type='text' name='giphyKey' placeholder='Paste Giphy App Key' />
+      </div>
+      <div>
+        <label for='twitchChannel'>Twitch Channel</label>
+        <input type='text' name='twitchChannel' placeholder='Twitch Channel' />
+      </div>
+      <div>
+        <input type='submit' value='submit' />
+      </div>
+    </form>
   );
 }
 
