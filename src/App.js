@@ -3,7 +3,7 @@ import './App.css';
 import ComfyJS from 'comfy.js'
 import { GiphyFetch } from '@giphy/js-fetch-api'
 
-import { useState, useEffect, useRef } from 'react'
+import { useMemo, useState, useEffect, useRef } from 'react'
 
 const logger = console;
 
@@ -22,10 +22,7 @@ function App() {
   const giphyKey = urlParams.get('giphyKey');
   const twitchChannel = urlParams.get('twitchChannel');
 
-  const gf = new GiphyFetch(giphyKey);
-
-  const [ url, setUrl ] = useState(null);
-  const [ hasInteracted, setHasInteracted ] = useState(false);
+ const [ hasInteracted, setHasInteracted ] = useState(false);
 
   useEffect(() => {
     if(!hasInteracted) {
@@ -43,8 +40,24 @@ function App() {
     }
   });
 
+
+  if(!hasInteracted) {
+    return <button onClick={e => setHasInteracted(true)}>CLICK ME</button>;
+  }
+
+  return (
+    <div className="App">
+      <TwitchContainer giphyKey={giphyKey} twitchChannel={twitchChannel} />
+    </div>
+  );
+}
+
+function TwitchContainer({ giphyKey, twitchChannel }) {
+  const gf = useMemo(() => new GiphyFetch(giphyKey), [ giphyKey ]);
+
+  const [ url, setUrl ] = useState(null);
+
   useEffect(() => {
-    // TODO maybe extra a bit so we can test :)
     ComfyJS.onCommand = async (user, command, message, flags, extra) => {
       console.log(command, message);
       if(command === 'g') {
@@ -64,16 +77,14 @@ function App() {
     };
 
     ComfyJS.Init(twitchChannel);
-  });
 
-  if(!hasInteracted) {
-    return <button onClick={e => setHasInteracted(true)}>CLICK ME</button>;
-  }
+    return () => {
+      ComfyJS.Disconnect();
+    };
+  }, [ gf, twitchChannel ]);
 
   return (
-    <div className="App">
-      <MediaPlayer url={url} />
-    </div>
+    <MediaPlayer url={url} />
   );
 }
 
