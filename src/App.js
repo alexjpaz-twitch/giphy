@@ -85,9 +85,7 @@ function TwitchContainer({ giphyKey, twitchChannel }) {
 
   useEffect(() => {
     ComfyJS.onCommand = async (user, command, message, flags, extra) => {
-      console.log(command, message);
       if(command === 'g') {
-        console.log(message);
         let term = message;
 
         logger.info(`Searching for ${term}`);
