@@ -2,6 +2,7 @@ import {
   useEffect,
   useRef,
   useState,
+  useCallback
 } from 'react'
 
 const logger = console;
@@ -29,7 +30,7 @@ export function MediaPlayerPlaylist({ url }) {
 
   }, [ queue, currentUrl ]);
 
-  const onEnd = () => {
+  const onEnd = useCallback(() => {
     if(queue.length > 0) {
       const currentUrl = queue.shift();
       logger.info("Playing next video", currentUrl);
@@ -42,7 +43,7 @@ export function MediaPlayerPlaylist({ url }) {
       logger.info("End of the queue reached");
       setCurrentUrl(null);
     }
-  };
+  }, [ queue ]);
 
   if(!currentUrl) {
     return null;
@@ -87,7 +88,7 @@ export function MediaPlayerElement({ url, onEnd = NOOP }) {
 
       videoRef.current.addEventListener("ended", onend);
     })();
-  }, [ videoRef, url]);
+  }, [ videoRef, url ]);
 
   return (
     <video ref={videoRef}></video>
