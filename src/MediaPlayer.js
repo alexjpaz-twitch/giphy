@@ -1,13 +1,59 @@
 import {
   useEffect,
-  useRef
+  useRef,
+  useState,
 } from 'react'
 
 const logger = console;
+const NOOP = () => {};
 
 const MINIMUM_DURATION = 5 * 1000;
 
-export function MediaPlayer({ url }) {
+export function MediaPlayerPlaylist({ url }) {
+
+  const [ queue, setQueue ] = useState([]);
+
+  const [ currentUrl, setCurrentUrl ] = useState(null);
+
+  useEffect(() => {
+    logger.info("Queuing video", url);
+    setQueue((q) => [...q, url]);
+  }, [ url ]);
+
+  useEffect(() => {
+    if(!currentUrl && queue.length > 0) {
+      const currentUrl = queue.shift();
+      setQueue([...queue]);
+      setCurrentUrl(currentUrl);
+    }
+
+  }, [ queue, currentUrl ]);
+
+  const onEnd = () => {
+    if(queue.length > 0) {
+      const currentUrl = queue.shift();
+      logger.info("Playing next video", currentUrl);
+
+      setQueue([...queue]);
+
+      setCurrentUrl(currentUrl);
+    } else {
+
+      logger.info("End of the queue reached");
+      setCurrentUrl(null);
+    }
+  };
+
+  if(!currentUrl) {
+    return null;
+  }
+
+  return (
+    <MediaPlayerElement url={currentUrl} onEnd={onEnd} />
+  )
+}
+
+export function MediaPlayerElement({ url, onEnd = NOOP }) {
   const videoRef = useRef(null);
 
   useEffect(() => {
@@ -35,15 +81,22 @@ export function MediaPlayer({ url }) {
           logger.info("Duration reached ending");
           videoRef.current.src = null;
           videoRef.current.removeEventListener("ended", onend);
+          onEnd(url);
         }
       };
 
       videoRef.current.addEventListener("ended", onend);
     })();
-  }, [ videoRef, url ]);
+  }, [ videoRef, url]);
 
   return (
     <video ref={videoRef}></video>
+  );
+}
+
+export function MediaPlayer({ url }) {
+  return (
+    <MediaPlayerPlaylist url={url} />
   );
 }
 
