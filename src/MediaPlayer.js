@@ -30,7 +30,7 @@ export function MediaPlayerPlaylist({ url }) {
 
   }, [ queue, currentUrl ]);
 
-  const onEnd = useCallback(() => {
+  const onEnd = () => {
     if(queue.length > 0) {
       const currentUrl = queue.shift();
       logger.info("Playing next video", currentUrl);
@@ -43,7 +43,7 @@ export function MediaPlayerPlaylist({ url }) {
       logger.info("End of the queue reached");
       setCurrentUrl(null);
     }
-  }, [ queue ]);
+  };
 
   if(!currentUrl) {
     return null;
@@ -88,6 +88,8 @@ export function MediaPlayerElement({ url, onEnd = NOOP }) {
 
       videoRef.current.addEventListener("ended", onend);
     })();
+  // TODO - I am obviously doing something "bad" but the "good" standard is preventing my intended behavior
+  /* eslint-disable react-hooks/exhaustive-deps */
   }, [ videoRef, url ]);
 
   return (
