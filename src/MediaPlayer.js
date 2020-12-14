@@ -2,7 +2,6 @@ import {
   useEffect,
   useRef,
   useState,
-  useCallback
 } from 'react'
 
 const logger = console;
