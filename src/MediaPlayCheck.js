@@ -3,7 +3,7 @@ import {
   useEffect
 } from 'react'
 
-export function DOMInteractionCheck({ children }) {
+export function MediaPlayCheck({ children }) {
 
   const [ canPlayMedia, setCanPlayMedia ] = useState(true);
 

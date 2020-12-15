@@ -6,7 +6,7 @@ import { GiphyFetch } from '@giphy/js-fetch-api'
 import { useMemo, useState, useEffect } from 'react'
 
 import { MediaPlayer } from './MediaPlayer';
-import { DOMInteractionCheck } from './DOMInteractionCheck';
+import { MediaPlayCheck } from './MediaPlayCheck';
 
 const logger = console;
 
@@ -33,9 +33,9 @@ function App() {
 
   return (
     <div className="App">
-      <DOMInteractionCheck>
+      <MediaPlayCheck>
         <TwitchContainer giphyKey={giphyKey} twitchChannel={twitchChannel} />
-      </DOMInteractionCheck>
+      </MediaPlayCheck>
     </div>
   );
 }
