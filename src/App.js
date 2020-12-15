@@ -6,6 +6,7 @@ import { GiphyFetch } from '@giphy/js-fetch-api'
 import { useMemo, useState, useEffect } from 'react'
 
 import { MediaPlayer } from './MediaPlayer';
+import { MediaPlayCheck } from './MediaPlayCheck';
 
 const logger = console;
 
@@ -24,37 +25,17 @@ function App() {
   const giphyKey = urlParams.get('giphyKey');
   const twitchChannel = urlParams.get('twitchChannel');
 
- const [ hasInteracted, setHasInteracted ] = useState(false);
-
-  useEffect(() => {
-    if(!hasInteracted) {
-      // TEST IF WE CAN PROCEED
-      (async function() {
-        const a = new Audio();
-        try {
-          await a.play();
-          setHasInteracted(true);
-        } catch(e) {
-        }
-      })();
-
-      return;
-    }
-  });
-
   if(!twitchChannel || !giphyKey) {
     return (
       <ConfigForm />
     )
   }
 
-  if(!hasInteracted) {
-    return <button onClick={e => setHasInteracted(true)}>CLICK ME</button>;
-  }
-
   return (
     <div className="App">
-      <TwitchContainer giphyKey={giphyKey} twitchChannel={twitchChannel} />
+      <MediaPlayCheck>
+        <TwitchContainer giphyKey={giphyKey} twitchChannel={twitchChannel} />
+      </MediaPlayCheck>
     </div>
   );
 }
