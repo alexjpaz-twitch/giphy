@@ -92,7 +92,7 @@ export function MediaPlayerElement({ url, onEnd = NOOP }) {
   }, [ videoRef, url ]);
 
   return (
-    <video ref={videoRef}></video>
+    <video muted={true} ref={videoRef}></video>
   );
 }
 
